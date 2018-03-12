@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
+
+        threadMigrationTest();
     }
 
     /**
@@ -26,4 +28,13 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+    private void threadMigrationTest()
+    {
+        MyThread thread = new MyThread();
+        // thread.start(); // 不采用本地执行
+        migrationStart(thread);
+    }
+
+    public native int migrationStart(Thread thread);
 }
